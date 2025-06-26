@@ -60,6 +60,28 @@ docker build -t verba .
 docker run -p 8000:8000 verba
 ```
 
+### Deploying on Coolify
+
+Coolify requires a modified docker-compose configuration since it manages ports automatically through its Traefik reverse proxy.
+
+**Use the Coolify-specific configuration:**
+```bash
+# In Coolify, set Docker Compose Location to:
+./docker-compose.coolify.yml
+```
+
+**Key differences from local development:**
+- No port mappings in docker-compose.coolify.yml (Coolify handles this)
+- Services communicate internally using service names (e.g., `http://weaviate:8080`)
+- External access configured through Coolify's domain settings
+- Set application port to `8000` in Coolify dashboard
+
+**Coolify Configuration Steps:**
+1. Use `docker-compose.coolify.yml` instead of `docker-compose.yml`
+2. Set Port to `8000` in Coolify application settings
+3. Configure your domain (e.g., `verba.yourdomain.com`)
+4. Ensure health checks are enabled (already defined in compose file)
+
 ## Architecture Overview
 
 ### Backend Structure (`goldenverba/`)
